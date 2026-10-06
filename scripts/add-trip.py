@@ -7,7 +7,13 @@ updates the trip entry in trips.json.
 
 Resizing uses `sips` on macOS and falls back to Pillow elsewhere.
 
-Example:
+If the trip already exists in trips.json (matched by --slug, or by the slug
+derived from --title), its title, place, date and description are kept unless
+you pass new ones, so filling a pre-created album is just:
+
+    python3 scripts/add-trip.py ~/Pictures/Larak --slug larak-island
+
+Example for a brand new trip:
     python3 scripts/add-trip.py ~/Pictures/Lisbon --title "Lisbon" --place "Portugal" --date 2025-05
 """
 
@@ -68,18 +74,29 @@ def load_manifest() -> dict:
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("folder", type=Path, help="folder containing the photos")
-    ap.add_argument("--title", required=True)
-    ap.add_argument("--place", required=True, help="country or region, shown under the title")
-    ap.add_argument("--date", required=True, help="YYYY-MM or YYYY-MM-DD, used for sorting")
+    ap.add_argument("--title", help="required for a new trip")
+    ap.add_argument("--place", help="country or region, shown under the title; required for a new trip")
+    ap.add_argument("--date", help="YYYY-MM or YYYY-MM-DD, used for sorting; required for a new trip")
     ap.add_argument("--slug", help="URL slug (default: derived from title)")
-    ap.add_argument("--description", default="")
+    ap.add_argument("--description")
     ap.add_argument("--cover", help="file name (after import) to use as the cover; default is the first photo")
     args = ap.parse_args()
 
     if not args.folder.is_dir():
         sys.exit(f"{args.folder} is not a directory")
 
+    if not args.slug and not args.title:
+        sys.exit("Pass --slug for an existing trip or --title for a new one.")
     slug = args.slug or slugify(args.title)
+    manifest = load_manifest()
+    existing = next((t for t in manifest["trips"] if t.get("slug") == slug), {})
+    title = args.title or existing.get("title")
+    place = args.place if args.place is not None else existing.get("place")
+    date = args.date or existing.get("date")
+    description = args.description if args.description is not None else existing.get("description", "")
+    missing = [k for k, v in (("--title", title), ("--place", place), ("--date", date)) if not v]
+    if missing:
+        sys.exit(f"New trip '{slug}' needs {', '.join(missing)}.")
     dest = PHOTOS_DIR / slug
     thumbs = dest / "thumbs"
 
@@ -95,22 +112,28 @@ def main() -> None:
         resize(dest / out_name, thumbs / out_name, THUMB_EDGE)
         photos.append({"file": out_name, "caption": ""})
 
-    manifest = load_manifest()
+    # Keep captions that were already written for files that are still present.
+    old_captions = {p["file"]: p.get("caption", "") for p in existing.get("photos", [])}
+    for p in photos:
+        p["caption"] = old_captions.get(p["file"], "")
+    names = {p["file"] for p in photos}
+    cover = args.cover or (existing.get("cover") if existing.get("cover") in names else photos[0]["file"])
+
     manifest["trips"] = [t for t in manifest["trips"] if t.get("slug") != slug]
     manifest["trips"].append(
         {
             "slug": slug,
-            "title": args.title,
-            "place": args.place,
-            "date": args.date,
-            "description": args.description,
-            "cover": args.cover or photos[0]["file"],
+            "title": title,
+            "place": place,
+            "date": date,
+            "description": description,
+            "cover": cover,
             "photos": photos,
         }
     )
     manifest["trips"].sort(key=lambda t: str(t.get("date", "")), reverse=True)
     MANIFEST.write_text(json.dumps(manifest, indent=2, ensure_ascii=False) + "\n")
-    print(f"\nAdded trip '{args.title}' with {len(photos)} photos. Edit trips.json to add captions, then commit and push.")
+    print(f"\nSaved trip '{title}' with {len(photos)} photos. Edit trips.json to add captions, then commit and push.")
 
 
 if __name__ == "__main__":

@@ -31,8 +31,10 @@
     app.innerHTML = `<div class="grid">${sorted
       .map((t) => {
         const cover = t.cover || (t.photos[0] && t.photos[0].file);
-        const img = cover ? `<img src="${thumbSrc(t, cover)}" alt="${esc(t.title)}" loading="lazy">` : "";
-        return `<a class="card" href="#/${encodeURIComponent(t.slug)}">${img}
+        const img = cover
+          ? `<img src="${thumbSrc(t, cover)}" alt="${esc(t.title)}" loading="lazy">`
+          : `<div class="placeholder" aria-hidden="true">${esc(t.title.slice(0, 1))}</div>`;
+        return `<a class="card${cover ? "" : " no-photos"}" href="#/${encodeURIComponent(t.slug)}">${img}
           <div class="caption"><strong>${esc(t.title)}</strong><span>${esc(t.place)} · ${esc(formatDate(t.date))}</span></div></a>`;
       })
       .join("")}</div>`;
@@ -53,6 +55,7 @@
         <div class="meta">${esc(trip.place)} · ${esc(formatDate(trip.date))} · ${trip.photos.length} photo${trip.photos.length === 1 ? "" : "s"}</div>
         ${trip.description ? `<p class="description">${esc(trip.description)}</p>` : ""}
       </div>
+      ${trip.photos.length ? "" : `<p class="empty">No photos yet. Import them with <code>python3 scripts/add-trip.py &lt;folder&gt; --slug ${esc(trip.slug)}</code>.</p>`}
       <div class="grid photos">${trip.photos
         .map(
           (p, i) => `<a class="card" href="${photoSrc(trip, p.file)}" data-index="${i}">

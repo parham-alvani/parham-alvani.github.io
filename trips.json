@@ -1,3 +1,103 @@
 {
-  "trips": []
+  "trips": [
+    {
+      "slug": "europe-2026",
+      "title": "Europe 2026",
+      "place": "France, Spain, Netherlands, Germany, Tunisia",
+      "date": "2026-08-24",
+      "description": "Thirty-three days and eight stops: Paris, Nice, Barcelona, Amsterdam, Munich, Tunis, and back to Barcelona.",
+      "cover": "",
+      "photos": []
+    },
+    {
+      "slug": "turkey",
+      "title": "Turkey",
+      "place": "Turkey",
+      "date": "2025-10",
+      "description": "",
+      "cover": "",
+      "photos": []
+    },
+    {
+      "slug": "russia",
+      "title": "Russia",
+      "place": "Russia",
+      "date": "2025-09",
+      "description": "",
+      "cover": "",
+      "photos": []
+    },
+    {
+      "slug": "paris",
+      "title": "Paris",
+      "place": "France",
+      "date": "2025-08",
+      "description": "",
+      "cover": "",
+      "photos": []
+    },
+    {
+      "slug": "dubai-02",
+      "title": "Dubai, again",
+      "place": "United Arab Emirates",
+      "date": "2025-08",
+      "description": "",
+      "cover": "",
+      "photos": []
+    },
+    {
+      "slug": "china",
+      "title": "China",
+      "place": "China",
+      "date": "2025-04",
+      "description": "",
+      "cover": "",
+      "photos": []
+    },
+    {
+      "slug": "kish-island",
+      "title": "Kish Island",
+      "place": "Iran",
+      "date": "2025-02",
+      "description": "",
+      "cover": "",
+      "photos": []
+    },
+    {
+      "slug": "farur-island",
+      "title": "Farur Island",
+      "place": "Iran",
+      "date": "2025-01",
+      "description": "",
+      "cover": "",
+      "photos": []
+    },
+    {
+      "slug": "dubai-01",
+      "title": "Dubai",
+      "place": "United Arab Emirates",
+      "date": "2024-12",
+      "description": "",
+      "cover": "",
+      "photos": []
+    },
+    {
+      "slug": "larak-island",
+      "title": "Larak Island",
+      "place": "Iran",
+      "date": "2024-11",
+      "description": "",
+      "cover": "",
+      "photos": []
+    },
+    {
+      "slug": "lazoor-lake",
+      "title": "Lazoor Lake",
+      "place": "Iran",
+      "date": "2023-05",
+      "description": "",
+      "cover": "",
+      "photos": []
+    }
+  ]
 }
