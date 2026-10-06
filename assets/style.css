@@ -126,6 +126,34 @@ main {
   border-radius: 6px;
 }
 
+/* Instagram embeds */
+.instagram { margin-top: 32px; }
+.instagram h3 { margin: 0 0 12px; font-size: 1.1rem; color: var(--muted); font-weight: 600; }
+
+.ig-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: var(--gap);
+  align-items: start;
+}
+
+.ig-grid blockquote.instagram-media {
+  margin: 0 !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+  width: 100% !important;
+  border-radius: var(--radius) !important;
+}
+
+.ig-grid blockquote.instagram-media:not(.instagram-media-rendered) {
+  background: var(--surface);
+  min-height: 420px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--muted);
+}
+
 /* Lightbox */
 .lightbox {
   position: fixed;

@@ -129,6 +129,7 @@ def main() -> None:
             "description": description,
             "cover": cover,
             "photos": photos,
+            "instagram": existing.get("instagram", []),
         }
     )
     manifest["trips"].sort(key=lambda t: str(t.get("date", "")), reverse=True)

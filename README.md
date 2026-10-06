@@ -8,7 +8,13 @@ There is no build step. `index.html` loads `assets/app.js`, which reads `trips.j
 
 ## Trips
 
-The trip list in `trips.json` mirrors the folders of our private `travels` repository, which holds the tickets, visas and itineraries for each journey. Every trip starts as an empty album and shows a placeholder card until photos are imported into it.
+The trip list in `trips.json` follows Elaheh's Instagram account, [@elahe.dstn](https://www.instagram.com/elahe.dstn/), where every trip has one or more posts and reels. Each trip entry can hold two kinds of media: photos committed to this repository under `photos/<slug>/`, and an `instagram` list of post and reel codes that the trip page embeds with Instagram's official embed script. Nothing is copied from Instagram; the embeds load straight from Instagram and stay in sync with the account, so they only render while the account is public.
+
+An Instagram code is the part of the URL after `/p/` or `/reel/`. Reels are prefixed so the embed uses the right permalink:
+
+```json
+"instagram": ["reel:DXy78vYsWlV", "p:DZiAKwkjB5Q"]
+```
 
 ## Adding photos
 

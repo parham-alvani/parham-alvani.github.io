@@ -35,7 +35,7 @@
           ? `<img src="${thumbSrc(t, cover)}" alt="${esc(t.title)}" loading="lazy">`
           : `<div class="placeholder" aria-hidden="true">${esc(t.title.slice(0, 1))}</div>`;
         return `<a class="card${cover ? "" : " no-photos"}" href="#/${encodeURIComponent(t.slug)}">${img}
-          <div class="caption"><strong>${esc(t.title)}</strong><span>${esc(t.place)} · ${esc(formatDate(t.date))}</span></div></a>`;
+          <div class="caption"><strong>${esc(t.title)}</strong><span>${esc(t.place)} · ${esc(formatDate(t.date))}${(t.instagram || []).length ? ` · ${t.instagram.length} on Instagram` : ""}</span></div></a>`;
       })
       .join("")}</div>`;
   }
@@ -55,19 +55,53 @@
         <div class="meta">${esc(trip.place)} · ${esc(formatDate(trip.date))} · ${trip.photos.length} photo${trip.photos.length === 1 ? "" : "s"}</div>
         ${trip.description ? `<p class="description">${esc(trip.description)}</p>` : ""}
       </div>
-      ${trip.photos.length ? "" : `<p class="empty">No photos yet. Import them with <code>python3 scripts/add-trip.py &lt;folder&gt; --slug ${esc(trip.slug)}</code>.</p>`}
+      ${trip.photos.length || (trip.instagram || []).length ? "" : `<p class="empty">No photos yet. Import them with <code>python3 scripts/add-trip.py &lt;folder&gt; --slug ${esc(trip.slug)}</code>.</p>`}
       <div class="grid photos">${trip.photos
         .map(
           (p, i) => `<a class="card" href="${photoSrc(trip, p.file)}" data-index="${i}">
             <img src="${thumbSrc(trip, p.file)}" alt="${esc(p.caption || trip.title)}" loading="lazy"></a>`
         )
-        .join("")}</div>`;
+        .join("")}</div>
+      ${renderInstagram(trip)}`;
+    loadInstagramEmbeds();
     app.querySelectorAll(".photos .card").forEach((el) =>
       el.addEventListener("click", (e) => {
         e.preventDefault();
         openLightbox(Number(el.dataset.index));
       })
     );
+  }
+
+  // Instagram posts and reels are embedded with Instagram's official embed script,
+  // so nothing is copied; each entry is a post or reel code from the URL.
+  function renderInstagram(trip) {
+    const codes = trip.instagram || [];
+    if (!codes.length) return "";
+    return `<section class="instagram">
+      <h3>${trip.photos.length ? "From Instagram" : "On Instagram"}</h3>
+      <div class="ig-grid">${codes
+        .map((c) => {
+          const kind = c.startsWith("reel:") ? "reel" : "p";
+          const code = c.replace(/^(reel|p):/, "");
+          const url = `https://www.instagram.com/${kind}/${encodeURIComponent(code)}/`;
+          return `<blockquote class="instagram-media" data-instgrm-permalink="${url}" data-instgrm-version="14">
+            <a href="${url}" target="_blank" rel="noopener">View on Instagram</a></blockquote>`;
+        })
+        .join("")}</div></section>`;
+  }
+
+  let instagramScript = null;
+  function loadInstagramEmbeds() {
+    if (!document.querySelector(".instagram-media")) return;
+    if (window.instgrm && window.instgrm.Embeds) {
+      window.instgrm.Embeds.process();
+      return;
+    }
+    if (instagramScript) return;
+    instagramScript = document.createElement("script");
+    instagramScript.async = true;
+    instagramScript.src = "https://www.instagram.com/embed.js";
+    document.body.appendChild(instagramScript);
   }
 
   function openLightbox(i) {
