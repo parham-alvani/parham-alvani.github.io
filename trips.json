@@ -149,21 +149,6 @@
       "lng": 37.6173
     },
     {
-      "slug": "dubai",
-      "title": "Dubai",
-      "place": "United Arab Emirates",
-      "date": "2025-08",
-      "description": "",
-      "cover": "",
-      "photos": [],
-      "instagram": [
-        "reel:DPea-79jFET"
-      ],
-      "country": "AE",
-      "lat": 25.2048,
-      "lng": 55.2708
-    },
-    {
       "slug": "brussels",
       "title": "Brussels",
       "place": "Belgium",
@@ -194,6 +179,21 @@
       "lng": 2.3522
     },
     {
+      "slug": "dubai-2",
+      "title": "Dubai 2",
+      "place": "United Arab Emirates",
+      "date": "2025-08",
+      "description": "",
+      "cover": "",
+      "photos": [],
+      "instagram": [
+        "reel:DPea-79jFET"
+      ],
+      "country": "AE",
+      "lat": 25.2048,
+      "lng": 55.2708
+    },
+    {
       "slug": "china",
       "title": "China",
       "place": "China",
@@ -211,19 +211,46 @@
     },
     {
       "slug": "kish",
-      "title": "Kish & Hendorabi",
+      "title": "Kish",
       "place": "Iran",
+      "date": "2025-02-10",
+      "description": "",
+      "cover": "",
+      "photos": [],
+      "instagram": [],
+      "country": "IR",
+      "lat": 26.5579,
+      "lng": 53.9804
+    },
+    {
+      "slug": "hendorabi",
+      "title": "Hendorabi",
+      "place": "Iran",
+      "date": "2025-02-04",
+      "description": "",
+      "cover": "",
+      "photos": [],
+      "instagram": [
+        "p:DFp0c_tN-pN"
+      ],
+      "country": "IR",
+      "lat": 26.6833,
+      "lng": 53.6333
+    },
+    {
+      "slug": "dubai",
+      "title": "Dubai",
+      "place": "United Arab Emirates",
       "date": "2025-01",
       "description": "",
       "cover": "",
       "photos": [],
       "instagram": [
-        "reel:DEpXyzztW4d",
-        "p:DFp0c_tN-pN"
+        "reel:DEpXyzztW4d"
       ],
-      "country": "IR",
-      "lat": 26.5579,
-      "lng": 53.9804
+      "country": "AE",
+      "lat": 25.2048,
+      "lng": 55.2708
     },
     {
       "slug": "yazd",
