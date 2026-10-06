@@ -32,7 +32,10 @@
         "p:Dcs5ElDDJgM",
         "p:DcqXv-UjBW_",
         "reel:DcaKWOFocCH"
-      ]
+      ],
+      "country": "FR",
+      "lat": 48.8566,
+      "lng": 2.3522
     },
     {
       "slug": "tbilisi",
@@ -45,7 +48,10 @@
       "instagram": [
         "reel:DZkY3oaMDnd",
         "p:DZiAKwkjB5Q"
-      ]
+      ],
+      "country": "GE",
+      "lat": 41.7151,
+      "lng": 44.8271
     },
     {
       "slug": "barcelona",
@@ -59,7 +65,10 @@
         "reel:DXy78vYsWlV",
         "reel:DXrYZwHjN6o",
         "reel:DXq7JoEjAuI"
-      ]
+      ],
+      "country": "ES",
+      "lat": 41.3874,
+      "lng": 2.1686
     },
     {
       "slug": "istanbul-2",
@@ -71,7 +80,10 @@
       "photos": [],
       "instagram": [
         "reel:DXUIznbjPzs"
-      ]
+      ],
+      "country": "TR",
+      "lat": 41.0082,
+      "lng": 28.9784
     },
     {
       "slug": "bandar-abbas",
@@ -83,7 +95,10 @@
       "photos": [],
       "instagram": [
         "reel:DXJn-GKgtTQ"
-      ]
+      ],
+      "country": "IR",
+      "lat": 27.1865,
+      "lng": 56.2808
     },
     {
       "slug": "chabahar",
@@ -95,7 +110,10 @@
       "photos": [],
       "instagram": [
         "reel:DRUcXMyDE8b"
-      ]
+      ],
+      "country": "IR",
+      "lat": 25.2919,
+      "lng": 60.643
     },
     {
       "slug": "istanbul",
@@ -109,7 +127,10 @@
         "p:DQw1oQVjGkk",
         "p:DPts_VBjIGc",
         "p:DPtkd9TjBgy"
-      ]
+      ],
+      "country": "TR",
+      "lat": 41.0082,
+      "lng": 28.9784
     },
     {
       "slug": "russia",
@@ -122,7 +143,10 @@
       "instagram": [
         "reel:DO6D9GojA9P",
         "reel:DOvjDY3DKlT"
-      ]
+      ],
+      "country": "RU",
+      "lat": 55.7558,
+      "lng": 37.6173
     },
     {
       "slug": "dubai",
@@ -134,7 +158,10 @@
       "photos": [],
       "instagram": [
         "reel:DPea-79jFET"
-      ]
+      ],
+      "country": "AE",
+      "lat": 25.2048,
+      "lng": 55.2708
     },
     {
       "slug": "brussels",
@@ -146,7 +173,10 @@
       "photos": [],
       "instagram": [
         "reel:DNvfhUoWOLj"
-      ]
+      ],
+      "country": "BE",
+      "lat": 50.8503,
+      "lng": 4.3517
     },
     {
       "slug": "paris",
@@ -158,7 +188,10 @@
       "photos": [],
       "instagram": [
         "reel:DNdWlz0sSpv"
-      ]
+      ],
+      "country": "FR",
+      "lat": 48.8566,
+      "lng": 2.3522
     },
     {
       "slug": "china",
@@ -171,7 +204,10 @@
       "instagram": [
         "reel:DIV5P93tSmC",
         "reel:DIgQchDO9y6"
-      ]
+      ],
+      "country": "CN",
+      "lat": 39.9042,
+      "lng": 116.4074
     },
     {
       "slug": "kish",
@@ -184,7 +220,10 @@
       "instagram": [
         "reel:DEpXyzztW4d",
         "p:DFp0c_tN-pN"
-      ]
+      ],
+      "country": "IR",
+      "lat": 26.5579,
+      "lng": 53.9804
     },
     {
       "slug": "yazd",
@@ -196,7 +235,10 @@
       "photos": [],
       "instagram": [
         "p:DD_--QTt5C0"
-      ]
+      ],
+      "country": "IR",
+      "lat": 31.8974,
+      "lng": 54.3569
     },
     {
       "slug": "larak-island",
@@ -208,7 +250,10 @@
       "photos": [],
       "instagram": [
         "reel:DDAO0euShO1"
-      ]
+      ],
+      "country": "IR",
+      "lat": 26.8667,
+      "lng": 56.3667
     }
   ]
 }

@@ -1,0 +1,50 @@
+name: Instagram embeds
+
+# Instagram posts can be deleted or made private. Once a week, confirm that every
+# embedded post still answers, and open an issue listing the ones that do not.
+on:
+  schedule:
+    - cron: "0 6 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Probe every embedded post
+        id: probe
+        run: |
+          python3 - <<'PY' > report.txt
+          import json, re, urllib.request
+          data = json.load(open("trips.json"))
+          bad = []
+          for t in data["trips"]:
+              for e in t.get("instagram", []):
+                  kind = "reel" if e.startswith("reel:") else "p"
+                  code = re.sub(r"^(reel|p):", "", e)
+                  url = f"https://www.instagram.com/{kind}/{code}/embed/"
+                  try:
+                      req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+                      with urllib.request.urlopen(req, timeout=30) as r:
+                          if r.status != 200:
+                              bad.append((t["slug"], e, f"HTTP {r.status}"))
+                  except Exception as ex:
+                      bad.append((t["slug"], e, str(ex)[:80]))
+          for slug, e, why in bad:
+              print(f"- `{slug}`: `{e}` — {why}")
+          PY
+          if [ -s report.txt ]; then echo "broken=true" >> "$GITHUB_OUTPUT"; cat report.txt; else echo "All embeds answer."; fi
+      - name: Open an issue for broken embeds
+        if: steps.probe.outputs.broken == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          title="Instagram embeds that no longer answer"
+          body=$(printf 'These embedded posts did not answer on %s. Remove them from trips.json or replace them.\n\n%s\n' "$(date -u +%Y-%m-%d)" "$(cat report.txt)")
+          existing=$(gh issue list --state open --search "$title in:title" --json number --jq '.[0].number')
+          if [ -n "$existing" ]; then gh issue comment "$existing" --body "$body"; else gh issue create --title "$title" --body "$body" --label maintenance; fi

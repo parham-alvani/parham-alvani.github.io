@@ -1,47 +1,57 @@
-# parham-alvani.github.io
+# we.1995parham.me
 
-A small static photo site for pictures from our trips around the world, served by GitHub Pages at <https://parham-alvani.github.io>.
+Pictures, posts and reels from Elaheh and Parham's trips around the world, at <https://we.1995parham.me> (also <https://parham-alvani.github.io>).
 
 ## How it works
 
-There is no build step. `index.html` loads `assets/app.js`, which reads `trips.json` and renders a grid of trips. Clicking a trip shows its photos, and clicking a photo opens a lightbox with keyboard arrows and swipe support. Images live under `photos/<slug>/` with thumbnails in `photos/<slug>/thumbs/`.
+`trips.json` is the only content file. `scripts/build.py` turns it into a static site in `dist/`: a home page with a map and filters, one page per trip at `/trips/<slug>/`, a sitemap, an Atom feed, `robots.txt`, a web manifest and a social preview image per page. There is no framework and no bundler; the pages are plain HTML with one stylesheet and one script.
 
-## Trips
+The trip list follows Elaheh's Instagram account, [@elahe.dstn](https://www.instagram.com/elahe.dstn/), where every trip has one or more posts and reels. A trip can hold two kinds of media: photos committed to this repository under `photos/<slug>/`, and an `instagram` list of post and reel codes that the trip page embeds with Instagram's official embed script. Nothing is copied from Instagram, so the embeds stay in sync with the account and only render while it is public.
 
-The trip list in `trips.json` follows Elaheh's Instagram account, [@elahe.dstn](https://www.instagram.com/elahe.dstn/), where every trip has one or more posts and reels. Each trip entry can hold two kinds of media: photos committed to this repository under `photos/<slug>/`, and an `instagram` list of post and reel codes that the trip page embeds with Instagram's official embed script. Nothing is copied from Instagram; the embeds load straight from Instagram and stay in sync with the account, so they only render while the account is public.
+## Deployment
 
-An Instagram code is the part of the URL after `/p/` or `/reel/`. Reels are prefixed so the embed uses the right permalink:
+Pushing to `main` runs the **Deploy** workflow, which validates `trips.json`, builds `dist/`, checks every internal link and publishes to GitHub Pages. Pull requests run the **Check** workflow with the same validation but no deploy. Once a week the **Instagram embeds** workflow probes every embedded post and opens an issue if one has gone missing.
+
+The custom domain is a Cloudflare CNAME, `we.1995parham.me` to `parham-alvani.github.io`, proxied through Cloudflare with HTTPS enforced on the GitHub side. The `CNAME` file in the repository and the Pages setting have to agree.
+
+## Adding a trip
+
+Add an object to `trips.json`. Only `slug`, `title`, `place` and `date` are required; `country` is a two-letter code used for the flag and the filter, `lat` and `lng` put the trip on the map, and `instagram` lists the posts to embed. An Instagram code is the part of the URL after `/p/` or `/reel/`, prefixed with `p:` or `reel:`.
 
 ```json
-"instagram": ["reel:DXy78vYsWlV", "p:DZiAKwkjB5Q"]
+{
+  "slug": "tbilisi",
+  "title": "Tbilisi",
+  "place": "Georgia",
+  "country": "GE",
+  "date": "2026-06",
+  "lat": 41.7151,
+  "lng": 44.8271,
+  "description": "",
+  "instagram": ["reel:DZkY3oaMDnd", "p:DZiAKwkjB5Q"]
+}
 ```
+
+Run `python3 scripts/build.py --check` to validate before pushing.
 
 ## Adding photos
 
-To fill an existing album, put its photos in a folder and run the import script with the trip's slug. The title, place and date already in `trips.json` are kept.
+To put photos of your own into an album, put them in a folder and run the import script with the trip's slug. It resizes the originals so the long edge is at most 2000px, generates 600px thumbnails, converts HEIC to JPEG and updates the trip's photo list, keeping any captions you already wrote.
 
 ```sh
-python3 scripts/add-trip.py ~/Pictures/Larak --slug larak-island
+python3 scripts/add-trip.py ~/Pictures/Tbilisi --slug tbilisi
 ```
 
-For a brand new trip, pass the details as well. It resizes the originals so the long edge is at most 2000px, generates 600px thumbnails, converts HEIC to JPEG, and adds the trip to `trips.json`.
-
-```sh
-python3 scripts/add-trip.py ~/Pictures/Lisbon --title "Lisbon" --place "Portugal" --date 2025-05 --description "A long weekend of trams and pastéis de nata."
-```
-
-The script uses `sips` on macOS and falls back to Pillow (`pip install pillow`) elsewhere. Afterwards, open `trips.json` to add captions or change the cover photo, then commit and push. GitHub Pages redeploys from `main` automatically.
-
-Re-running the script for the same slug replaces that album's photo list but keeps the captions you already wrote for files that are still there, so you can re-import a folder after adding photos to it.
+The script uses `sips` on macOS and falls back to Pillow (`pip install pillow`) elsewhere. For a brand new trip pass `--title`, `--place` and `--date` as well.
 
 ## Previewing locally
 
 ```sh
-python3 -m http.server 8000
+python3 scripts/build.py && python3 -m http.server -d dist 8000
 ```
 
-Then open <http://localhost:8000>. A plain `file://` open will not work because the page fetches `trips.json`.
+Then open <http://localhost:8000>. Install Pillow to also get the social preview images locally; the workflow always has it.
 
 ## Notes
 
-Photos are committed to the repository, so keep an eye on size. Resizing at import keeps a typical trip of 50 photos around 30 to 60 MB. If the repository grows past a few GB, move originals to a separate storage and keep only the resized copies here.
+Photos are committed to the repository, so keep an eye on size. Resizing at import keeps a typical trip of 50 photos around 30 to 60 MB. The Check workflow fails on any photo over 4 MB.

@@ -1,0 +1,28 @@
+name: Check
+
+on:
+  pull_request:
+  push:
+    branches-ignore: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Validate trips.json
+        run: python3 scripts/build.py --check
+      - name: Build and check internal links
+        run: python3 scripts/build.py --linkcheck
+      - name: Make sure every photo has a thumbnail and nothing is too large
+        run: |
+          set -e
+          big=$(find photos -type f -size +4M 2>/dev/null || true)
+          if [ -n "$big" ]; then echo "Photos over 4 MB, run scripts/add-trip.py to resize them:"; echo "$big"; exit 1; fi
+          echo "Photo sizes are fine."
