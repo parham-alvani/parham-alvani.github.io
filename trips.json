@@ -59,8 +59,13 @@
       "place": "Spain",
       "date": "2026-04",
       "description": "Sagrada Família, Casa Batlló, La Rambla, Montjuïc and the Barceloneta beach.",
-      "cover": "",
-      "photos": [],
+      "cover": "luccianos-gelato.jpg",
+      "photos": [
+        {
+          "file": "luccianos-gelato.jpg",
+          "caption": "Pistachio and chocolate gelato at Lucciano's on Rambla de Catalunya, a block from our hotel, El Avenida Palace."
+        }
+      ],
       "instagram": [
         "reel:DXy78vYsWlV",
         "reel:DXrYZwHjN6o",
