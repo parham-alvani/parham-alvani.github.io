@@ -226,7 +226,6 @@ def layout(*, title: str, description: str, path: str, body: str, og_image: str 
 
 
 def card(t: dict) -> str:
-    cover = t.get("cover") or (t["photos"][0]["file"] if t.get("photos") else "")
     year = parse_date(t["date"]).year
     media = []
     if t.get("photos"):
@@ -234,10 +233,7 @@ def card(t: dict) -> str:
     if t.get("instagram"):
         n = len(t["instagram"])
         media.append(f"{n} on Instagram")
-    if cover:
-        visual = f'<img src="/photos/{esc(t["slug"])}/thumbs/{esc(cover)}" alt="{esc(t["title"])}" loading="lazy" width="600" height="450">'
-    else:
-        visual = f'<div class="card-art" style="background:{gradient(t["slug"])}" aria-hidden="true"><span>{flag(t.get("country", ""))}</span></div>'
+    visual = f'<div class="card-art" style="background:{gradient(t["slug"])}" aria-hidden="true"><span>{flag(t.get("country", ""))}</span></div>'
     return f'''<a class="trip-card" href="/trips/{esc(t["slug"])}/" data-country="{esc(t.get("country", ""))}" data-year="{year}">
   <div class="card-visual">{visual}</div>
   <div class="card-body">
