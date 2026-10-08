@@ -1,6 +1,24 @@
 {
   "trips": [
     {
+      "slug": "barcelona-2",
+      "title": "Barcelona 2",
+      "place": "Spain",
+      "date": "2026-09",
+      "description": "Our second time in Barcelona, on a month across Europe: 🇫🇷 Paris → 🇫🇷 Nice → 🇪🇸 Barcelona → 🇳🇱 Amsterdam → 🇩🇪 Munich → 🇹🇳 Tunisia → 🇪🇸 Barcelona.",
+      "cover": "luccianos-gelato.jpg",
+      "photos": [
+        {
+          "file": "luccianos-gelato.jpg",
+          "caption": "Pistachio and chocolate gelato at Lucciano's on Rambla de Catalunya, a block from our hotel, El Avenida Palace."
+        }
+      ],
+      "instagram": [],
+      "country": "ES",
+      "lat": 41.3874,
+      "lng": 2.1686
+    },
+    {
       "slug": "paris-2026",
       "title": "Paris 2",
       "place": "France",
@@ -59,13 +77,8 @@
       "place": "Spain",
       "date": "2026-04",
       "description": "Sagrada Família, Casa Batlló, La Rambla, Montjuïc and the Barceloneta beach.",
-      "cover": "luccianos-gelato.jpg",
-      "photos": [
-        {
-          "file": "luccianos-gelato.jpg",
-          "caption": "Pistachio and chocolate gelato at Lucciano's on Rambla de Catalunya, a block from our hotel, El Avenida Palace."
-        }
-      ],
+      "cover": "",
+      "photos": [],
       "instagram": [
         "reel:DXy78vYsWlV",
         "reel:DXrYZwHjN6o",
